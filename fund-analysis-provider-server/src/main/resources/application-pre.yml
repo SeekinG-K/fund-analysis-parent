@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    username: ENC(ncPHYMSClFexP8TEt5HlYg==)
+    password: ENC(Is2LT3vI6kcXxamc2S5Apw==)
+    url: jdbc:mysql://127.0.0.1:3306/invest_pre?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    driverClassName: com.mysql.jdbc.Driver
+jasypt:
+  encryptor:
+    password: invest

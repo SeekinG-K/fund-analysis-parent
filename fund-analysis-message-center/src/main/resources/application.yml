@@ -1,0 +1,19 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: @project.artifactId@  #服务名称!
+  profiles:
+    active: @spring.profiles.active@
+  jackson:
+    time-zone: UTC
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: true
+app:
+  version: "@project.version@"
+  build:
+    time: "@build.time@"
+
+logging:
+  config: classpath:config/logback-spring.xml
