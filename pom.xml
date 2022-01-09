@@ -52,6 +52,7 @@
         <google.collections.version>1.0</google.collections.version>
         <fund-analysis-api.version>0.0.1.RELEASE</fund-analysis-api.version>
         <hutool.version>3.3.2</hutool.version>
+        <easypoi.version>4.4.0</easypoi.version>
     </properties>
 
     <developers>

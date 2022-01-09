@@ -2,26 +2,63 @@ package com.scale.invest.data.collection;
 
 import com.scale.invest.api.dto.stock.StockBaseInfoDataSource;
 import com.scale.invest.api.model.InvestFundMain;
+import com.scale.invest.api.model.InvestStockMain;
+import com.scale.invest.api.uitl.DateUtils;
+import com.scale.invest.api.uitl.JSMethods;
+import com.scale.invest.api.uitl.JavaScriptProvider;
 import com.scale.invest.data.collection.service.InvestFundMainService;
 import com.scale.invest.api.uitl.JsonFormatUtil;
+import com.scale.invest.data.collection.service.InvestStockMainService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
 
+import java.io.File;
+import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @SpringBootTest
+@Slf4j
 class DataCollectionApplicationTests {
 
     @Autowired
     private InvestFundMainService investFundMainService;
 
+    @Autowired
+    private InvestStockMainService stockMainService;
+
     @Test
     void contextLoads() {
-        InvestFundMain byId = investFundMainService.getById(1L);
+        InvestStockMain byId = stockMainService.getById(1L);
         System.out.println(byId);
+        try {
+            JavaScriptProvider<JSMethods> jsProvider = new JavaScriptProvider<>();
+            JSMethods jsMethods = jsProvider.loadJS("jscode/color.js", JSMethods.class);
+//            System.out.println(jsMethods.gradientColors("#008000", "#FFFFFF", 50));
+            System.out.println(jsMethods.gradientColors("#FF0000", "#FFFFFF", 50));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void testSQL() {
+        InvestStockMain investStockMain = InvestStockMain.builder()
+                .stockCode("a")
+                .tradeDate(DateUtils.intNow())
+                .stockName("b")
+                .newPrice(new BigDecimal(1))
+                .priceLimit(new BigDecimal(3))
+                .changeAmount(new BigDecimal(4))
+                .createTime(DateUtils.nowTime(true))
+                .updateTime(DateUtils.nowTime(true))
+                .build();
+        boolean save = stockMainService.save(investStockMain);
+        log.info(String.valueOf(save));
     }
 
     public static void main1(String[] args) {
@@ -40,7 +77,20 @@ class DataCollectionApplicationTests {
     }
 
     public static void main(String[] args) {
-        PythonInterpreter interpreter = new PythonInterpreter();
-        interpreter.execfile("C:\\Users\\scale\\Desktop\\baoStock.py");
+//        System.out.printf(String.valueOf((((3.4 * 100)%100)/10)));
+        BigDecimal bigDecimal = new BigDecimal("113.412");
+        BigDecimal bigDecimal1 = bigDecimal.setScale(1, BigDecimal.ROUND_UP);
+        String s = bigDecimal1.multiply(new BigDecimal(10)).stripTrailingZeros().toPlainString();
+        BigDecimal[] bigDecimals = bigDecimal.divideAndRemainder(new BigDecimal("1"));
+        System.out.println(s);
+//        BigDecimal multiply = bigDecimal.multiply(new BigDecimal(100));
+//        BigDecimal bg = BigDecimal.valueOf(11);
+//        BigDecimal om2 = BigDecimal.valueOf(25);
+//        System.out.println(om2.divideAndRemainder(bg)[1]);//取余
+//        BigDecimal remainder = multiply.remainder(bigDecimal);
+//
+//
+
+//        System.out.printf(String.valueOf(((3.4 * 100)%100)));
     }
 }

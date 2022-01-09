@@ -19,4 +19,19 @@ public class D1 implements Serializable {
      */
     private String f14;
 
+    /**
+     * 最新价
+     */
+    private String f16;
+
+    /**
+     * 涨跌额
+     */
+    private String f4;
+
+    /**
+     * 涨跌幅度
+     */
+    private String f3;
+
 }

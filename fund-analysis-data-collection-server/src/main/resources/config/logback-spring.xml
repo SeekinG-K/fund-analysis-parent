@@ -154,6 +154,7 @@
     <logger name="com.netflix" level="INFO"/>
     <logger name="org.apache" level="INFO"/>
     <logger name="org.mongodb.driver" level="INFO"/>
+    <logger name="com.scale.invest.data.collection.dao" level="DEBUG"/>
 
     <!-- 生产环境 -->
     <!--<springProfile name="prop">-->

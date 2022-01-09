@@ -1,6 +1,6 @@
 package com.scale.invest.api.model.message;
 
-import com.sun.xml.internal.ws.api.message.Headers;
+import com.sun.net.httpserver.Headers;
 
 public class ProducerRecordParam {
     private  String topic;

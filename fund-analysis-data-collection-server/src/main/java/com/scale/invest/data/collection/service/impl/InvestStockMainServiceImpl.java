@@ -4,6 +4,7 @@ package com.scale.invest.data.collection.service.impl;
 import com.scale.invest.api.dto.stock.D1;
 import com.scale.invest.api.dto.stock.StockBaseInfoDataSource;
 import com.scale.invest.api.model.InvestStockMain;
+import com.scale.invest.api.uitl.DateUtils;
 import com.scale.invest.data.collection.dao.InvestStockMainDao;
 import com.scale.invest.data.collection.service.InvestStockMainService;
 import com.scale.invest.api.uitl.JsonFormatUtil;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -55,10 +57,13 @@ public class InvestStockMainServiceImpl extends ServiceImpl<InvestStockMainDao, 
                     String f14 = d1.getF14();
                     InvestStockMain investStockMain = InvestStockMain.builder()
                             .stockCode(f12)
+                            .tradeDate(DateUtils.intNow())
                             .stockName(f14)
-                            .stockType(1)
-                            .createTime(new Date())
-                            .updateTime(new Date())
+                            .newPrice(new BigDecimal(d1.getF16()))
+                            .priceLimit(new BigDecimal(d1.getF3()))
+                            .changeAmount(new BigDecimal(d1.getF4()))
+                            .createTime(DateUtils.nowTime(true))
+                            .updateTime(DateUtils.nowTime(true))
                             .build();
                     try {
                         boolean save = save(investStockMain);
@@ -67,7 +72,7 @@ public class InvestStockMainServiceImpl extends ServiceImpl<InvestStockMainDao, 
                         }
                         result = save & result;
                     } catch (Exception e) {
-                       int i = 0;
+                        int i = 0;
                     }
                 }
             }

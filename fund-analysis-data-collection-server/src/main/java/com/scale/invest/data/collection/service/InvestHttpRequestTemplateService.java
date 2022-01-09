@@ -1,5 +1,7 @@
 package com.scale.invest.data.collection.service;
 
+import org.springframework.http.ResponseEntity;
+
 /**
  * <pre>
  * @description: http请求业务接口
@@ -15,6 +17,7 @@ public interface InvestHttpRequestTemplateService {
 
     /**
      * 不携带请求参数请求数据
+     *
      * @param uri
      * @param clazz
      * @param <T>
@@ -24,10 +27,21 @@ public interface InvestHttpRequestTemplateService {
 
     /**
      * 携带请求参数请求的数据
+     *
      * @param uri
      * @param clazz
      * @param <T>
      * @return
      */
     public <T> T getRequestParamData(String uri, Class<T> clazz);
+
+    /**
+     * 推送留到远程地址
+     *
+     * @param <T>
+     * @return
+     */
+    public <T> T pushFileStream(byte[] streamByte, String name);
+
+
 }
