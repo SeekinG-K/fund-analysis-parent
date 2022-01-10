@@ -295,7 +295,8 @@ public class PoiUtil {
             }
         }
         if (Objects.nonNull(workbook)) {
-            return sendStream(workbook);
+            downLoadExcel(fileName, response, workbook);
+//            return sendStream(workbook);
         }
         return null;
     }

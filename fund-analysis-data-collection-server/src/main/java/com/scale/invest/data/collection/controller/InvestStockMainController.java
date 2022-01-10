@@ -78,7 +78,7 @@ public class InvestStockMainController extends BaseController {
     @RequestMapping(value = "/investMarketDataSource/get", method = RequestMethod.GET)
     public Boolean getMarketInfoDataSource() {
         boolean b = false;
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 7; i++) {
             String url = "http://17.push2.eastmoney.com/api/qt/clist/get?cb=jQuery1124020537372933193265_1641617312827&pn=" + i +
                     "&pz=20&po=1&np=1&ut=bd1d9ddb04089700cf9c27f6f7426281&fltt=2&invt=2&fid=f3&fs=m:90+t:3+f:!50" +
                     "&fields=f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152,f124,f107,f104,f105,f140,f141,f207,f208,f209,f222";
@@ -86,7 +86,7 @@ public class InvestStockMainController extends BaseController {
             logger.info(noneRequestParamData);
             b = investStockMainService.saveStockInfoDataSource(noneRequestParamData);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -127,13 +127,13 @@ public class InvestStockMainController extends BaseController {
             map.put("stockName", investStockMain.getStockName());
             set.forEach(time -> {
                 InvestStockMain finalData = investStockMainMap.getOrDefault(time, new InvestStockMain());
-                map.put(String.valueOf(time), finalData.getPriceLimit().toPlainString());
+                map.put(String.valueOf(time), Objects.nonNull(finalData.getPriceLimit()) ? finalData.getPriceLimit().toPlainString() : "");
             });
             dataList.add(map);
         });
 
         byte[] streamByte = PoiUtil.exportExcel(colList, dataList, null, "概念热点图", "概念热点图.xlsx", response);
-        String noneRequestParamData = investHttpRequestTemplateService.pushFileStream(streamByte, "概念热点图.xlsx");
+//        String noneRequestParamData = investHttpRequestTemplateService.pushFileStream(streamByte, "概念热点图.xlsx");
 
     }
 }

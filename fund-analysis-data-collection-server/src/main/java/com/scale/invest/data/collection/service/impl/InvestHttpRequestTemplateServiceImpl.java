@@ -134,6 +134,11 @@ public class InvestHttpRequestTemplateServiceImpl implements InvestHttpRequestTe
             uriInfo = new URI(one);
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(bodyParams, headers);
             ResponseEntity<Wechat> exchange = restTemplate.exchange(uriInfo, HttpMethod.POST, requestEntity, Wechat.class);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             Wechat body = exchange.getBody();
             if (Objects.nonNull(body)) {
                 String two = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=dfbc116d-2154-47bf-a9c6-d757ebc32c8e";
